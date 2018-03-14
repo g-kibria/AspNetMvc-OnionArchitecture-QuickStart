@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DbModels\" />
+    <Folder Include="DbMappings\" />
+    <Folder Include="DbContexts\" />
+    <Folder Include="Repositories\Interfaces\" />
+  </ItemGroup>
+
+</Project>

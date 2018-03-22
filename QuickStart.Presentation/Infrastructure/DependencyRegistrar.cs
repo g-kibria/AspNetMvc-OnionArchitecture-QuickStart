@@ -1,5 +1,9 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 
 namespace QuickStart.Presentation.Infrastructure
 {
@@ -7,17 +11,24 @@ namespace QuickStart.Presentation.Infrastructure
     {
         public static void RegisterDependencies(ContainerBuilder builder)
         {
-            // Register the types here
+            var path = AppDomain.CurrentDomain.RelativeSearchPath;
+            var assemblies = Directory.GetFiles(path, "QuickStart.*.dll")
+                .Select(Assembly.LoadFrom)
+                .ToArray();
+
             // DbContexts
-            
+            builder.RegisterAssemblyTypes(assemblies)
+                .Where(t => t.Name.EndsWith("DbContext"))
+                .InstancePerRequest();
+
             // Repositories
-            builder.RegisterAssemblyTypes()
+            builder.RegisterAssemblyTypes(assemblies)
                 .Where(t => t.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces()
                 .InstancePerRequest();
 
             // Services
-            builder.RegisterAssemblyTypes()
+            builder.RegisterAssemblyTypes(assemblies)
                 .Where(t => t.Name.EndsWith("Service"))
                 .AsImplementedInterfaces()
                 .InstancePerRequest();

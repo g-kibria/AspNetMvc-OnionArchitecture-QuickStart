@@ -13,11 +13,14 @@ namespace QuickStart.Presentation.Infrastructure
         {
             if (log != null) return;
 
-            string logFileDirectory = string.Format("{0}\\Logs", Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
+            string logFileDirectory = string.Format("{0}\\Logs", 
+                Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
+
             if (!Directory.Exists(logFileDirectory))
             {
                 Directory.CreateDirectory(logFileDirectory);
             }
+
             log4net.Config.BasicConfigurator.Configure();
             log = log4net.LogManager.GetLogger(typeof(MvcApplication));
         }
